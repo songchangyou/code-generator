@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//itqimeng.com//code generator//CN" "http://itqimeng.com:8081/dtd/generator-config.dtd" >
+<configuration>
+	<property name="targetProject" value="D:/temp"></property>
+	<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"></property>
+	<property name="connectionURL" value="jdbc:oracle:thin:@127.0.0.1:1521:orcl"></property>
+	<classPathEntry location="D:/tmp/mybatis/code-generator/lib/ojdbc14-10.2.0.4.0.jar"/>
+	<jdbcConnection driverClass="${driverClass}" connectionURL="${connectionURL}" userId="jtaq" password="jtaq" >
+		<property name="remarksReporting" value="true"/>
+	</jdbcConnection>
+	<templates>
+		<template targetDirectory="abc" tplFile="def" fileType="java"></template>
+	</templates>
+	<tables schema="JTAQ" containsView="true" exclude="tsm*" include="COM_ORG_DRIVER"/>
+</configuration>
