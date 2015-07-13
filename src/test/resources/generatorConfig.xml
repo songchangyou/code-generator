@@ -4,12 +4,12 @@
 	<property name="targetProject" value="D:/temp"></property>
 	<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"></property>
 	<property name="connectionURL" value="jdbc:oracle:thin:@127.0.0.1:1521:orcl"></property>
-	<classPathEntry location="D:/tmp/mybatis/code-generator/lib/ojdbc14-10.2.0.4.0.jar"/>
+	<classPathEntry location="C:\Users\Administrator.SCY-PC\git\code-generator\lib\ojdbc14-10.2.0.4.0.jar"/>
 	<jdbcConnection driverClass="${driverClass}" connectionURL="${connectionURL}" userId="jtaq" password="jtaq" >
 		<property name="remarksReporting" value="true"/>
 	</jdbcConnection>
-	<templates>
-		<template targetDirectory="abc" tplFile="def" fileType="java"></template>
+	<templates overwrite="true" makeDirIfNotExist="true" tplDirectory="C:\Users\Administrator.SCY-PC\git\code-generator\src\main\resources\com\itqimeng\generator\template">
+		<template targetDirectory="D:/tmp/test" fileNamePrefix="I" fileNameSuffix="Impl" tplFile="model.ftl" fileType="java"></template>
 	</templates>
 	<tables schema="JTAQ" containsView="true" exclude="tsm*" include="COM_ORG_DRIVER"/>
 </configuration>

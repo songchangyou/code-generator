@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.internal.ObjectFactory;
 import org.mybatis.generator.internal.db.ConnectionFactory;
 import org.mybatis.generator.internal.util.JavaBeansUtil;
@@ -80,10 +81,26 @@ public class CodeGenerator {
 					for(Table table : tables){
 						Map<String,Table> root = new HashMap<String,Table>();
 						root.put("table", table);
-						//TODO: 解析模版路径
 						
-						//TODO: 递归创建生成的目录
-						FreeMarkerUtil.generateFile(root);
+						//保存的文件名为：文件名前缀+表名（首字母大写）+文件名后缀+"."+生成文件的类型
+						String outFileName = template.getTargetDirectory();
+						outFileName = outFileName.replaceAll("\\\\", "/");
+						if(!outFileName.endsWith("/")){
+							outFileName += "/";
+						}
+						if(StringUtility.stringHasValue(template.getFileNamePrefix())){
+							outFileName += template.getFileNamePrefix();
+						}
+						outFileName +=  table.getTableName();
+						if(StringUtility.stringHasValue(template.getFileNameSuffix())){
+							outFileName += template.getFileNameSuffix();
+						}
+						outFileName +=  "." + template.getFileType();
+						
+						//TODO: 表生成时引入需要的类  column取得javaType
+						//生成文件
+						FreeMarkerUtil.generateFile(root,templates.getTplDirectory(),template.getTplFile(),outFileName,
+								templates.isMarkDirIfNotExists(),templates.isOverwrite());
 					}
 				}
 			}
@@ -195,7 +212,6 @@ public class CodeGenerator {
 //						DATA_TYPE int => 来自 java.sql.Types 的 SQL 类型 
 					int dataType = rs.getInt("DATA_TYPE");
 					column.setDataType(dataType);
-					column.setJdbcTypeInformation(resolver.getJdbcTypeInformation(dataType));
 //						TYPE_NAME String => 数据源依赖的类型名称，对于 UDT，该类型名称是完全限定的 
 //						COLUMN_SIZE int => 列的大小。 
 					int columnSize = rs.getInt("COLUMN_SIZE");
@@ -264,12 +280,18 @@ public class CodeGenerator {
 						String isAutoincrement = rs.getString("IS_AUTOINCREMENT");
 						column.setIsAutoincrement(isAutoincrement);
 					}
+					
+					
+					resolver.calculateJdbcTypeInformation(column);
+					
 					//blob字段
 					if(dataType == Types.BLOB){
 						blobColumns.add(column);
 					}else{
 						baseColumns.add(column);
 					}
+					
+					
 				}
 				
 				//主键 从baseColumns和blobColumn中查找，找到后加到primaryKeyColumns中，并从baseColumns或者blobColumns中删除

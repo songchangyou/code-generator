@@ -8,6 +8,9 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
@@ -15,6 +18,8 @@ import freemarker.template.TemplateException;
 
 public class FreeMarkerUtil {
 
+	private final static Logger logger = LoggerFactory.getLogger(FreeMarkerUtil.class);
+	
 	public static Configuration getFreeMarkerCfg(String ftlPath) {
 		Configuration freemarkerCfg = new Configuration();
 		freemarkerCfg.setBooleanFormat("true,false");
@@ -55,28 +60,55 @@ public class FreeMarkerUtil {
 		return true;
 	}
 
-	public static void generateFile(Map<?, ?> root) {
+	/**
+	 * 生成文件
+	 * @param root 根对象
+	 * @param tplDirectory 模版目录
+	 * @param tplFileName 模版名称
+	 * @param outFileName 输出文件的路径
+	 * @param makeDirIfNotExist 如果输出文件的目录不存在，是否创建
+	 * @param overwriteExistFile 如果输出目标文件已存在，是否覆盖
+	 */
+	public static void generateFile(Map<?, ?> root,String tplDirectory,
+			String tplFileName,String outFileName,boolean makeDirIfNotExist,boolean overwriteExistFile) {
 		try {
+			tplDirectory = tplDirectory.replace("\\\\", "/");
+			tplFileName = tplFileName.replaceAll("\\\\", "");
+			outFileName = outFileName.replaceAll("\\\\", "/");
 			Configuration config = new Configuration();
 			// 设置要解析的模板所在的目录，并加载模板文件
 			config.setDirectoryForTemplateLoading(
-					new File("D:/tmp/mybatis/code-generator/src/main/resources/com/itqimeng/generator/template"));
+					new File(tplDirectory));
 			// 设置包装器，并将对象包装为数据模型
 			config.setObjectWrapper(new DefaultObjectWrapper());
 
 			// 获取模板,并设置编码方式，这个编码必须要与页面中的编码格式一致
 			// 否则会出现乱码
-			Template template = config.getTemplate("/model.ftl", "UTF-8");
-			// 合并数据模型与模板
-			FileOutputStream fos = new FileOutputStream("D:/tmp/test/a.java");
-			Writer out = new OutputStreamWriter(fos, "UTF-8");
-			template.process(root, out);
-			out.flush();
-			out.close();
+			Template template = config.getTemplate(tplFileName, "UTF-8");
+			if(makeDirIfNotExist){
+				String outDirectory = outFileName.substring(0,outFileName.lastIndexOf("/"));
+				File outFile = new File(outDirectory);
+				if(!outFile.exists()){
+					outFile.mkdirs();
+				}
+			}
+			File outFile = new File(outFileName);
+			boolean outFileIsExist = outFile.exists();
+			if(outFileIsExist && !overwriteExistFile){
+				logger.info(outFileName+"已存在，未重新生成！");
+			}else{
+				// 合并数据模型与模板
+				FileOutputStream fos = new FileOutputStream(outFileName);
+				Writer out = new OutputStreamWriter(fos, "UTF-8");
+				template.process(root, out);
+				out.flush();
+				out.close();
+				logger.info("生成"+outFileName);
+			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("IO异常", e);
 		} catch (TemplateException e) {
-			e.printStackTrace();
+			logger.error("模版异常", e);
 		}
 	}
 

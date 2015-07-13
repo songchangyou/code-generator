@@ -15,9 +15,28 @@ public class Templates {
 	private boolean markDirIfNotExists;
 	
 	/**
+	 * 模版文件的存放路径
+	 */
+	private String tplDirectory;
+	
+	/**
 	 * 模版文件
 	 */
 	private List<Template> templates = new ArrayList<Template>();
+
+	/**
+	 * 模版文件的存放路径
+	 */
+	public String getTplDirectory() {
+		return tplDirectory;
+	}
+
+	/**
+	 * 模版文件的存放路径
+	 */
+	public void setTplDirectory(String tplDirectory) {
+		this.tplDirectory = tplDirectory;
+	}
 
 	/**
 	 * 如果文件已存在是否重写

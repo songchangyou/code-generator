@@ -233,6 +233,7 @@ public class GeneratorConfigurationParser {
     	String makeDirIfNotExist = attributes.getProperty("makeDirIfNotExist");
     	templates.setOverwrite(XmlConstant.TRUE.equals(overwrite));
     	templates.setMarkDirIfNotExists(XmlConstant.TRUE.equals(makeDirIfNotExist));
+    	templates.setTplDirectory(attributes.getProperty("tplDirectory"));
     	NodeList children = node.getChildNodes();
     	for(int i=0; i < children.getLength(); i++){
     		Node childNode = children.item(i);
@@ -257,6 +258,8 @@ public class GeneratorConfigurationParser {
     	template.setFileType(attributes.getProperty("fileType"));
     	template.setTargetDirectory(attributes.getProperty("targetDirectory"));
     	template.setTplFile(attributes.getProperty("tplFile"));
+    	template.setFileNamePrefix(attributes.getProperty("fileNamePrefix"));
+    	template.setFileNameSuffix(attributes.getProperty("fileNameSuffix"));
     	return template;
     }
 

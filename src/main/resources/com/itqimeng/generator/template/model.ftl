@@ -1,4 +1,8 @@
-${table.tableName}
+<#list  table.allColumns as column>
+<#list column.jdbcTypeInformation.fullyQualifiedJavaType.importList as importStr>
+${importStr}
+</#list>
+</#list>
 
 ${table.primaryKeyColumns[0].columnNameLower}
 
