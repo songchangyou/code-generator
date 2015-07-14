@@ -53,6 +53,22 @@ public class Tables {
 	 */
 	private boolean containsView;
 	/**
+	 * 数值类型是否强制转化为BigDecimal类型
+	 */
+	private boolean forceBigDecimals;
+	/**
+	 * 数值类型是否强制转化为BigDecimal类型
+	 */
+	public boolean isForceBigDecimals() {
+		return forceBigDecimals;
+	}
+	/**
+	 * 数值类型是否强制转化为BigDecimal类型
+	 */
+	public void setForceBigDecimals(boolean forceBigDecimals) {
+		this.forceBigDecimals = forceBigDecimals;
+	}
+	/**
 	 * 为java中DatabaseMetaData的getTables方法的参数
 	 */
 	public String getCatalog() {

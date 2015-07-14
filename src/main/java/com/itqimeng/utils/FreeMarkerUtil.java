@@ -76,6 +76,8 @@ public class FreeMarkerUtil {
 			tplFileName = tplFileName.replaceAll("\\\\", "");
 			outFileName = outFileName.replaceAll("\\\\", "/");
 			Configuration config = new Configuration();
+			//变量为null则替换为空字符串
+			config.setClassicCompatible(true);
 			// 设置要解析的模板所在的目录，并加载模板文件
 			config.setDirectoryForTemplateLoading(
 					new File(tplDirectory));

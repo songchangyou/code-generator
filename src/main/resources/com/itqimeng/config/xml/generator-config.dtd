@@ -69,7 +69,7 @@
 	containsView 是否包含视图
 	catalog schema 为java中DatabaseMetaData的getTables方法的参数
 		schema oracle数据时为表用户
-	
+	forceBigDecimals 数值类型是否强制转化为BigDecimal类型
 	生成规则：
 		如果包含在 exclude中，不生成
 		不在exclude中：
@@ -85,6 +85,7 @@
 	containsView (true|false) "true"
 	include CDATA #IMPLIED
 	exclude CDATA #IMPLIED
+	forceBigDecimals (true|false) "false"
 >
 
 

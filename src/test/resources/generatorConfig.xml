@@ -9,7 +9,7 @@
 		<property name="remarksReporting" value="true"/>
 	</jdbcConnection>
 	<templates overwrite="true" makeDirIfNotExist="true" tplDirectory="C:\Users\Administrator.SCY-PC\git\code-generator\src\main\resources\com\itqimeng\generator\template">
-		<template targetDirectory="D:/tmp/test" fileNamePrefix="I" fileNameSuffix="Impl" tplFile="model.ftl" fileType="java"></template>
+		<template targetDirectory="D:/tmp/test" fileNamePrefix="" fileNameSuffix="" tplFile="model.ftl" fileType="java"></template>
 	</templates>
-	<tables schema="JTAQ" containsView="true" exclude="tsm*" include="COM_ORG_DRIVER"/>
+	<tables schema="JTAQ" forceBigDecimals="false" containsView="true" exclude="tsm*" include="COM_ORG_DRIVER"/>
 </configuration>

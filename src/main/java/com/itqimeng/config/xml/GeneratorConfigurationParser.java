@@ -272,7 +272,8 @@ public class GeneratorConfigurationParser {
 		tables.setInclude(include);
 		tables.setCatalog(attributes.getProperty("catalog"));
 		tables.setSchema(attributes.getProperty("schema"));
-		tables.setContainsView(XmlConstant.TRUE.equals(attributes.get("containsView")));
+		tables.setContainsView(XmlConstant.TRUE.equals(attributes.getProperty("containsView")));
+		tables.setForceBigDecimals(XmlConstant.TRUE.equals(attributes.getProperty("forceBigDecimals")));
 		tables.parseTable();
 		return tables;
 	}

@@ -187,7 +187,7 @@ public class CodeGenerator {
 			ResultSet rs = null;
 			//主键列
 			ResultSet primaryKeyRs = null;
-			JavaTypeResolverImpl resolver = new JavaTypeResolverImpl();
+			
 			List<Column> primaryKeyColumns = new ArrayList<Column>();
 			List<Column> blobColumns = new ArrayList<Column>();
 			List<Column> baseColumns = new ArrayList<Column>();
@@ -281,7 +281,8 @@ public class CodeGenerator {
 						column.setIsAutoincrement(isAutoincrement);
 					}
 					
-					
+					JavaTypeResolverImpl resolver = new JavaTypeResolverImpl();
+					resolver.setForceBigDecimals(this.config.getTables().isForceBigDecimals());
 					resolver.calculateJdbcTypeInformation(column);
 					
 					//blob字段

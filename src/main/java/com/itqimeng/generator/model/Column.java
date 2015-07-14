@@ -1,5 +1,6 @@
 package com.itqimeng.generator.model;
 
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl.JdbcTypeInformation;
 
 public class Column {
@@ -303,6 +304,36 @@ public class Column {
 	 */
 	public void setTable(Table table) {
 		this.table = table;
+	}
+	
+	/**
+	 * 列对应的java类型
+	 * @return
+	 */
+	public String getJavaTypeShortName(){
+		String answer = null;
+		if(this.jdbcTypeInformation != null){
+			FullyQualifiedJavaType javaType = jdbcTypeInformation.getFullyQualifiedJavaType();
+			if(javaType != null){
+				answer = javaType.getShortName();
+			}
+		}
+		return answer;
+	}
+	
+	/**
+	 * 列对应的java类型
+	 * @return
+	 */
+	public String getJavaTypeName(){
+		String answer = null;
+		if(this.jdbcTypeInformation != null){
+			FullyQualifiedJavaType javaType = jdbcTypeInformation.getFullyQualifiedJavaType();
+			if(javaType != null){
+				answer = javaType.getFullyQualifiedName();
+			}
+		}
+		return answer;
 	}
 	
 }

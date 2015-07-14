@@ -19,7 +19,6 @@ public class JavaTypeResolverImpl extends JavaTypeResolverDefaultImpl{
 	public void calculateJdbcTypeInformation(Column column) {
 		String jdbcTypeName = calculateJdbcTypeName(column.getDataType());
 	    FullyQualifiedJavaType fullyQualifiedJavaType = calculateJavaType(column);
-		
 		JdbcTypeInformation answer = new JdbcTypeInformation(jdbcTypeName, fullyQualifiedJavaType);
 		column.setJdbcTypeInformation(answer);
 		
@@ -83,4 +82,16 @@ public class JavaTypeResolverImpl extends JavaTypeResolverDefaultImpl{
         return answer;
     }
 	
+	/**
+	 * 数值类型是否强制转化为BigDecimal类型
+	 */
+	public boolean isForceBigDecimals() {
+		return forceBigDecimals;
+	}
+	/**
+	 * 数值类型是否强制转化为BigDecimal类型
+	 */
+	public void setForceBigDecimals(boolean forceBigDecimals) {
+		this.forceBigDecimals = forceBigDecimals;
+	}
 }

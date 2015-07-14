@@ -1,7 +1,13 @@
 package com.itqimeng.generator.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl.JdbcTypeInformation;
 
 public class Table {
 	
@@ -28,10 +34,7 @@ public class Table {
 	
 	private String schema;
 	
-	/**
-	 * 所有列 keyColumns+baseColumns+bolbCoumns
-	 */
-	private List<Column> allColumns;
+	
 	/**
 	 * 非主键列，非blob列
 	 */
@@ -46,6 +49,20 @@ public class Table {
 	 * blob列
 	 */
 	private List<Column> blobColumns = new ArrayList<Column>();
+	
+	/**
+	 * blob列
+	 */
+	public List<Column> getBlobColumns() {
+		return blobColumns;
+	}
+	/**
+	 * blob列
+	 */
+	public void setBlobColumns(List<Column> blobColumns) {
+		this.blobColumns = blobColumns;
+	}
+
 	/**
 	 * 数据库中保存的表名
 	 */
@@ -153,6 +170,66 @@ public class Table {
 			columns.addAll(blobColumns);
 		}
 		return columns;
+	}
+	
+	/**
+	 * 返回所有非主键列
+	 * @return
+	 */
+	public List<Column> getNonPriamryKeyColumns(){
+		List<Column> columns = new ArrayList<Column>();
+		if(baseColumns != null && baseColumns.size()>0){
+			columns.addAll(baseColumns);
+		}
+		if(blobColumns != null && blobColumns.size()>0){
+			columns.addAll(blobColumns);
+		}
+		return columns;
+	}
+	
+	/**
+	 * 返回非blob列
+	 * @return
+	 */
+	public List<Column> getNonBlobColumns(){
+		List<Column> columns = new ArrayList<Column>();
+		if(primaryKeyColumns != null && primaryKeyColumns.size()>0){
+			columns.addAll(primaryKeyColumns);
+		}
+		if(baseColumns != null && baseColumns.size()>0){
+			columns.addAll(baseColumns);
+		}
+		return columns;
+	}
+	
+	/**
+	 * 表中所有列使用的import,Set转为List是由于freemarker遍历set会报错
+	 * @return
+	 */
+	public List<String> getImportList(){
+		Set<String> set = new HashSet<String>();
+		List<Column> allColumns = getAllColumns();
+		Iterator<Column> it = allColumns.iterator();
+		while(it.hasNext()){
+			Column column = it.next();
+			if(column != null){
+				JdbcTypeInformation jdbcTypeInfo =  column.getJdbcTypeInformation();
+				if(jdbcTypeInfo != null){
+					FullyQualifiedJavaType javaType = jdbcTypeInfo.getFullyQualifiedJavaType();
+					if(javaType != null){
+						List<String> columnImportList = javaType.getImportList();
+						if(columnImportList != null){
+							set.addAll(columnImportList);
+						}
+					}
+				}
+			}
+		}
+		List<String> answer = new ArrayList<String>();
+		if(set.size()>0){
+			answer.addAll(set);
+		}
+		return answer;
 	}
 
 }

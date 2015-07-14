@@ -1,11 +1,43 @@
-<#list  table.allColumns as column>
-<#list column.jdbcTypeInformation.fullyQualifiedJavaType.importList as importStr>
-${importStr}
-</#list>
+package com.itqimeng.test;
+
+<#list  table.importList as importStr>
+import ${importStr};
 </#list>
 
-${table.primaryKeyColumns[0].columnNameLower}
+/**
+ *${table.actualTableName}
+ *${table.remarks}
+ */
+public class ${table.tableName}{
 
-<#list  table.allColumns as column>
- ${column.columnNameLower}
-</#list>
+	public ${table.tableName}(){
+	
+	}
+	
+	<#-- 字段 -->
+	<#list  table.allColumns as column>
+	/**
+	 *${column.remarks}
+	 */
+	private ${column.javaTypeShortName} ${column.columnNameLower};
+	
+	</#list>
+	
+	<#-- getter setter -->
+	<#list  table.allColumns as column>
+	/**
+	 *${column.remarks}
+	 */
+	public ${column.javaTypeShortName} get${column.columnNameUpper}(){
+		return this.${column.columnNameLower};
+	}
+	
+	/**
+	 *${column.remarks}
+	 */
+	public void set${column.columnNameUpper}(${column.javaTypeShortName} ${column.columnNameLower}){
+		this.${column.columnNameLower} = ${column.columnNameLower};
+	}
+	</#list>
+	
+}
