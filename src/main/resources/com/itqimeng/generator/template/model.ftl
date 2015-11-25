@@ -1,4 +1,4 @@
-package com.itqimeng.test;
+package ${prop.entityPackageName};
 
 <#list  table.importList as importStr>
 import ${importStr};

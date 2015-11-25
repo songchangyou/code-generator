@@ -1,8 +1,5 @@
 package com.itqimeng.test;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,15 +24,6 @@ public class GeneratorTest {
 			throw new RuntimeException(e.getMessage());
 		}
 		
-	}
-	
-	@Test
-	public void wildcardTest(){
-		String reg = "*abc*";
-		String pattern = "^"+reg.replace("*", ".*")+"$";
-		Pattern p = Pattern.compile(pattern);
-		Matcher m = p.matcher("abdcdddd");
-		logger.info(m.matches()+"");
 	}
 	
 	

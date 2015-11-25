@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.mybatis.generator.api.JavaTypeResolver;
 import org.mybatis.generator.internal.ObjectFactory;
@@ -79,8 +80,12 @@ public class CodeGenerator {
 				while(it.hasNext()){
 					Template template = it.next();
 					for(Table table : tables){
-						Map<String,Table> root = new HashMap<String,Table>();
+						Map<String,Object> root = new HashMap<String,Object>();
 						root.put("table", table);
+						/**
+						 * com.itqimeng.config.xml.model.Configuration中的Properties属性
+						 */
+						root.put("prop", config.getProperties());
 						
 						//保存的文件名为：文件名前缀+表名（首字母大写）+文件名后缀+"."+生成文件的类型
 						String outFileName = template.getTargetDirectory();

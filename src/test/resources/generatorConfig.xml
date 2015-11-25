@@ -2,15 +2,26 @@
 <!DOCTYPE configuration PUBLIC "-//itqimeng.com//code generator//CN" "http://itqimeng.com:8081/dtd/generator-config.dtd" >
 <configuration>
 	<property name="targetProject" value="D:/temp"></property>
+	<!-- 数据库驱动 -->
 	<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"></property>
+	<!-- 数据库连接字符串 -->
 	<property name="connectionURL" value="jdbc:oracle:thin:@172.18.10.21:1521:rdorcl"></property>
+	<!-- 数据库用户名 -->
+	<property name="userName" value="ynoms"></property>
+	<!-- 数据库密码 -->
+	<property name="password" value="ynoms"></property>
+	<!-- 实体的包名 -->
+	<property name="entityPackageName" value="com.ydtf.entity"></property>
+	<!-- mapper的包名 -->
+	<property name="mapperPackageName" value="com.ydtf.mapper"></property>
 	<classPathEntry location="C:\Users\Administrator.SCY-PC\git\code-generator\lib\ojdbc14-10.2.0.4.0.jar"/>
-	<jdbcConnection driverClass="${driverClass}" connectionURL="${connectionURL}" userId="ynoms" password="ynoms" >
+	<jdbcConnection driverClass="${driverClass}" connectionURL="${connectionURL}" userId="${userName}" password="${password}" >
 		<property name="remarksReporting" value="true"/>
 	</jdbcConnection>
 	<templates overwrite="true" makeDirIfNotExist="true" tplDirectory="C:\Users\Administrator.SCY-PC\git\code-generator\src\main\resources\com\itqimeng\generator\template">
-		<template targetDirectory="D:/tmp/test" fileNamePrefix="" fileNameSuffix="" tplFile="model.ftl" fileType="java"></template>
+		<template targetDirectory="D:/tmp/test/src/com/ydtf/entity" fileNamePrefix="" fileNameSuffix="" tplFile="model.ftl" fileType="java"></template>
+		<template targetDirectory="D:/tmp/test/config/mapping" fileNamePrefix="" fileNameSuffix="Mapper" tplFile="mapper.ftl" fileType="xml"></template>
 	</templates>
 	<!-- Oracle时schema需大写 -->
-	<tables schema="YNOMS" forceBigDecimals="false" containsView="true" exclude="tsm*" include="BP_SYS_FUN"/>
+	<tables schema="YNOMS" forceBigDecimals="false" containsView="true" exclude="tsm*" include="BP_SYS_ROLE_FUN"/>
 </configuration>
