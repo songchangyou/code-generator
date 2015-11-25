@@ -14,14 +14,24 @@
 	<property name="entityPackageName" value="com.ydtf.entity"></property>
 	<!-- mapper的包名 -->
 	<property name="mapperPackageName" value="com.ydtf.mapper"></property>
+	<!-- service的包名 -->
+	<property name="servicePackageName" value="com.ydtf.service"></property>
+	<!-- baseService的包名 -->
+	<property name="baseServicePackageName" value="com.ydtf.base"></property>
+	<!-- serviceImpl的包名 -->
+	<property name="serviceImplPackageName" value="com.ydtf.service.impl"></property>
+	<!-- baseMapper的包名 -->
+	<property name="baseMapperPackageName" value="com.ydtf.base"></property>
 	<classPathEntry location="C:\Users\Administrator.SCY-PC\git\code-generator\lib\ojdbc14-10.2.0.4.0.jar"/>
 	<jdbcConnection driverClass="${driverClass}" connectionURL="${connectionURL}" userId="${userName}" password="${password}" >
 		<property name="remarksReporting" value="true"/>
 	</jdbcConnection>
 	<templates overwrite="true" makeDirIfNotExist="true" tplDirectory="C:\Users\Administrator.SCY-PC\git\code-generator\src\main\resources\com\itqimeng\generator\template">
 		<template targetDirectory="D:/tmp/test/src/com/ydtf/entity" fileNamePrefix="" fileNameSuffix="" tplFile="model.ftl" fileType="java"></template>
+		<template targetDirectory="D:/tmp/test/src/com/ydtf/service" fileNamePrefix="" fileNameSuffix="Service" tplFile="service.ftl" fileType="java"></template>
+		<template targetDirectory="D:/tmp/test/src/com/ydtf/service/impl" fileNamePrefix="" fileNameSuffix="ServiceImpl" tplFile="serviceImpl.ftl" fileType="java"></template>
+		<template targetDirectory="D:/tmp/test/src/com/ydtf/mapper" fileNamePrefix="" fileNameSuffix="Mapper" tplFile="jMapper.ftl" fileType="java"></template>
 		<template targetDirectory="D:/tmp/test/config/mapping" fileNamePrefix="" fileNameSuffix="Mapper" tplFile="mapper.ftl" fileType="xml"></template>
 	</templates>
-	<!-- Oracle时schema需大写 -->
-	<tables schema="YNOMS" forceBigDecimals="false" containsView="true" exclude="tsm*" include="BP_SYS_ROLE_FUN"/>
+	<tables schema="YNOMS" forceBigDecimals="false" containsView="true" exclude="tsm*" include="BP_SYS_FUN,BP_SYS_ROLE_FUN,Bp_Wf_m_Proc_Group,bp_wf_m_process,Bp_Wf_m_Activity,bp_wf_m_activity_attr,bp_wf_m_actor,bp_wf_m_transition,bp_wf_m_condition,bp_wf_m_data_item,bp_wf_m_inout_param,bp_wf_m_pertinent_data,bp_wf_entity_field,bp_wf_entity"/>
 </configuration>

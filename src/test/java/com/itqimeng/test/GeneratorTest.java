@@ -14,6 +14,7 @@ public class GeneratorTest {
 	
 	@Test
 	public void CodeGeneratorTest(){
+		logger.info("开始执行");
 		try{
 			ConfigurationParser cp = new ConfigurationParser();
 			Configuration conf = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfig.xml"));
@@ -23,7 +24,7 @@ public class GeneratorTest {
 			e.printStackTrace();
 			throw new RuntimeException(e.getMessage());
 		}
-		
+		logger.info("执行结束");
 	}
 	
 	

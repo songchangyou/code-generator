@@ -26,6 +26,14 @@ public class Table {
 	private String tableName;
 	
 	/**
+	 * 表名首字母小写
+	 */
+	public String getTableNameLower(){
+		return tableName.substring(0,1).toLowerCase() + tableName.substring(1);
+	}
+
+	
+	/**
 	 * 注释
 	 */
 	private String remarks;
@@ -231,5 +239,5 @@ public class Table {
 		}
 		return answer;
 	}
-
+	
 }
