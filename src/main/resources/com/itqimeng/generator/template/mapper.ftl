@@ -38,12 +38,12 @@
 	</insert>
 	
 	<update id="updateEntity" parameterType="${prop.entityPackageName}.${table.tableName}">
-		update ${table.actualTableName} set
+		update ${table.actualTableName} set 
 		<#--非主键列，非blob列-->
 		<#list  table.baseColumns as column>
 		${column.actualColumnName}=<#noparse>#{</#noparse>${column.columnNameLower}<#noparse>}</#noparse><#if column_has_next>,</#if>
 		</#list>
-		where
+		 where 
 		<#-- 主键字段-->
 		<#list  table.primaryKeyColumns as column>
 		<#if test="column_index != 0">and </#if>${column.actualColumnName}=<#noparse>#{</#noparse>${column.columnNameLower}<#noparse>}</#noparse><#if column_has_next>,</#if>
@@ -54,7 +54,7 @@
 		delete from ${table.actualTableName} where 
 		<#-- 主键字段-->
 		<#list  table.primaryKeyColumns as column>
-		where A.${column.actualColumnName}<#noparse>=#{pkId,jdbcType=VARCHAR}</#noparse>
+		${column.actualColumnName}<#noparse>=#{pkId,jdbcType=VARCHAR}</#noparse>
 		</#list>
 	</delete>
 	
