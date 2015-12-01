@@ -2,7 +2,7 @@ package ${prop.serviceImplPackageName};
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 import ${prop.entityPackageName}.${table.tableName};
 import ${prop.mapperPackageName}.${table.tableName}Mapper;
 import ${prop.servicePackageName}.${table.tableName}Service;
@@ -31,6 +31,13 @@ public class ${table.tableName}ServiceImpl implements ${table.tableName}Service 
 		return ${table.tableNameLower}Mapper.deleteEntityByPKId(pkId);
 	}
 
+	public List<${table.tableName}> getByDynamicWhere(${table.tableName} entity) {
+		return ${table.tableNameLower}Mapper.getByDynamicWhere(entity);
+	}
+
+	public List<${table.tableName}> getByCustomWhere(String strWhere) {
+		return ${table.tableNameLower}Mapper.getByCustomWhere(strWhere);
+	}
 
 
 }

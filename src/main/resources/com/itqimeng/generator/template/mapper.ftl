@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="${prop.mapperPackageName}.${table.tableName}Mapper" >
-	<resultMap id="BaseResultMap" type="${prop.entityPackageName}.${table.tableName}" >
+	<resultMap id="baseResultMap" type="${prop.entityPackageName}.${table.tableName}" >
 		<#-- 主键字段-->
 		<#list  table.primaryKeyColumns as column>
 		<id column="${column.actualColumnName}" property="${column.columnNameLower}" jdbcType="${column.jdbcTypeInformation.jdbcTypeName}" /> 
@@ -12,14 +12,26 @@
 		</#list>
 	</resultMap>
 	
-	<sql id="Base_Column_List" >
+	<sql id="baseColumnList" >
 		<#-- 字段 -->
 		<#list  table.allColumns as column>A.${column.actualColumnName}<#if column_has_next>,</#if></#list>
 	</sql>
 	
-	<select id="getEntityByPKId" parameterType="java.lang.String" resultMap="BaseResultMap">
+	<sql id="dynamicWhere">
+		<where>
+			<#list table.allColumns as column>
+			<#if (column.javaTypeShortName=="String")>
+			<if test="@Ognl@isNotBlank(${column.columnNameLower})"> AND A.${column.actualColumnName} = <#noparse>#{</#noparse>${column.columnNameLower}}  </if>
+			<#else>
+			<if test="@Ognl@isNotEmpty(${column.columnNameLower})"> AND A.${column.actualColumnName}  =<#noparse>#{</#noparse>${column.columnNameLower}} </if>
+			</#if>
+			</#list>
+		</where>
+	</sql>
+	
+	<select id="getEntityByPKId" parameterType="java.lang.String" resultMap="baseResultMap">
 		select 
-		<include refid="Base_Column_List" />
+		<include refid="baseColumnList" />
 		from ${table.actualTableName} A 
 		<#-- 主键字段-->
 		<#list  table.primaryKeyColumns as column>
@@ -50,12 +62,26 @@
 		</#list>
 	</update>
 	
-	<delete id="deleteEntityByPKId">
+	<delete id="deleteEntityByPKId" parameterType="java.lang.String">
 		delete from ${table.actualTableName} where 
 		<#-- 主键字段-->
 		<#list  table.primaryKeyColumns as column>
 		${column.actualColumnName}<#noparse>=#{pkId,jdbcType=VARCHAR}</#noparse>
 		</#list>
 	</delete>
+	
+	<select id="getByDynamicWhere" parameterType="${prop.entityPackageName}.${table.tableName}" resultMap="baseResultMap">
+		select 
+		<include refid="baseColumnList" />
+		from ${table.actualTableName} A
+		<include refid="dynamicWhere" />
+	</select>
+	
+	<select id="getByCustomWhere" parameterType="java.lang.String" resultMap="baseResultMap">
+		select 
+		<include refid="baseColumnList" />
+		from ${table.actualTableName} A
+		<#noparse>#{strWhere}</#noparse>
+	</select>
 	
 </mapper>
