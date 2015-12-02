@@ -1,0 +1,51 @@
+package com.ydtf.base;
+
+import java.util.List;
+
+public interface BaseService<T> {
+	
+	/**
+	 * 根据主键获取实体
+	 * @param pkId 主键id
+	 * @return
+	 */
+	public T getEntityByPKId(String pkId);
+	
+	/**
+	 * 保存实体
+	 * @param entity
+	 * @return
+	 */
+	public int addEntity(T entity);
+	
+	/**
+	 * 更新实体
+	 * @param entity
+	 * @return
+	 */
+	public int updateEntity(T entity);
+	
+	/**
+	 * 通过主键删除实体
+	 * @param pkId
+	 * @return
+	 */
+	public int deleteEntityByPKId(String pkId);
+	
+	/**
+	 * 根据传入的对象，动态构建sql语句
+	 * @author scy
+	 * @param entity
+	 * @return
+	 */
+	public List<T> getByDynamicWhere(T entity);
+	
+	/**
+	 * 自定义查询sql
+	 * @author scy
+	 * @param strWhere
+	 * @return
+	 */
+	public List<T> getByCustomWhere(String strWhere);
+	
+}
